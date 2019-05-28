@@ -1,6 +1,6 @@
-# Bot do Discord do <podTag>!
+# Bot do Discord do [PodTag](https://podtag.com.br)!
 
-Bot desenvolvido durante as lives do podcast [<podTag/>](https://podtag.com.br) no [Twitch](https://www.twitch.tv/everag)!
+Bot desenvolvido durante as lives do podcast [PodTag](https://podtag.com.br) no [Twitch](https://www.twitch.tv/everag)!
 
 # Histórico de lives:
 
