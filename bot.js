@@ -1,49 +1,53 @@
-const Discord = require('discord.io');
-const { token } = require('./auth.json');
+const Discord = require('discord.js')
+const { token } = require('./auth.json')
 
-const channelIdBot = '567934005257961498';
+// const channelIdBot = '567934005257961498'
+const bot = new Discord.Client()
 
-// Initialize Discord Bot
-const bot = new Discord.Client({ token, autorun: true });
+bot.on('ready', () => {
+    console.log(`Bot conectado!`)
+    sendMessage({ content: 'Olá mundo! Tô na Arya.' })
+})
 
-bot.on('ready', evt => {
-    console.log(`Connected and logged in as ${bot.username} (${bot.id})`);
-    bot.sendMessage({
-        to: channelIdBot,
-        message: 'Olá mundo! Tô na Arya.'
-    });
-});
+bot.on('message', msg => {
+    const { author, channel, content } = msg
 
-bot.on('message', (user, userID, channelID, message, evt) => {
     // Somente tratar mensagens enviadas ao canal de teste
-    if (channelID !== channelIdBot) return;
+    if (channel.id !== channelIdBot) return
 
-    console.log(`Mensagem recebida de ${user}: ${message}`)
+    console.log(`@${author.username}: ${content} [${channel.name}]`)
 
     // Comandos
-    if (message.substring(0, 1) == '!') {
-        let args = message.substring(1).split(' ');
-        const cmd = args[0];
-        args = args.splice(1);
+    if (content.substring(0, 1) == '!') {
+        let args = content.substring(1).split(' ')
+        const cmd = args[0]
+        args = args.splice(1)
 
-        switch(cmd) {
+        switch (cmd) {
             // !ping
             case 'ping':
-                bot.sendMessage({
-                    to: channelID,
-                    message: `<@${userID}> Pong!`
-                });
-            break;
-         }
-         return;
-     }
-     
-     // Swagger !== Suegam
-     if (message.toLowerCase().includes('swagger')) {
-         bot.sendMessage({
-             to: channelID,
-             message: `<@${userID}> Você quis dizer: Suegam?`
-         })
-         return;
-     }
+                sendMessage({
+                    content: `<@${author.id}> Pong!`
+                })
+                break
+        }
+        return
+    }
+
+    // Swagger !== Suegam
+    if (content.toLowerCase().includes('swagger')) {
+        sendMessage({
+            content: `<@${author.id}> Você quis dizer: Suegam?`
+        })
+        return
+    }
 });
+
+function sendMessage({ channelName = 'podtag-bot', content }) {
+    bot.channels
+        .find(({name} = channel) => name === channelName)
+        .send(content)
+        .catch(e => console.log(`[Error] ${e}`))
+}
+
+bot.login(token)
