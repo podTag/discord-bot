@@ -1,0 +1,11 @@
+{
+    "name": "podtag-bot",
+    "version": "1.0.0",
+    "description": "Podtag Discord Bot",
+    "main": "bot.js",
+    "author": "Everton Agner",
+    "dependencies": {
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+        "winston": "^3.2.1"
+    }
+}
