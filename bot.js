@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 const { token } = require('./auth.json')
 
-// const channelIdBot = '567934005257961498'
+const channelIdBot = '567934005257961498'
 const bot = new Discord.Client()
 
 bot.on('ready', () => {
