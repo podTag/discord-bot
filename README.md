@@ -4,5 +4,5 @@ Bot desenvolvido durante as lives do podcast [PodTag](https://podtag.com.br) no 
 
 # Histórico de lives:
 
-- [25/Maio/2019](https://www.twitch.tv/videos/430851503)
-- [Coleção com todas no Twitch!](https://www.twitch.tv/collections/L4b8LjKzohWiaA)
+- 03/Junho/2019 ([Youtube](https://www.youtube.com/watch?v=VAhUplMbK54) / [Twitch](https://www.twitch.tv/videos/434121705))
+- 25/Maio/2019 ([Youtube](https://www.youtube.com/watch?v=lmfEMRFi9Rs) / [Twitch](https://www.twitch.tv/videos/430851503))
