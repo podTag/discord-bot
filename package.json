@@ -6,5 +6,8 @@
     "author": "Everton Agner",
     "dependencies": {
         "discord.js": "^11.5.0"
+    },
+    "devDependencies": {
+        "eslint": "^5.16.0"
     }
 }

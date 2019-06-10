@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const Discord = require('discord.js')
 const { token } = require('./auth.json')
 
@@ -20,12 +21,12 @@ bot.on('guildMemberAdd', member => {
             channel.send(dmBoasVindas)
         })
         .catch(console.error)
-    
+
     if (member.user.username === 'everton-teste-bot') return
-    
+
     const msgBoasVindasGeral = `Seja muito bem vindo(a), <@${member.user.id}>! Se apresenta pra gente! 😉`
     bot.channels
-        .find(({name} = channel) => name.includes('┇geral'))
+        .find(({ name }) => name.includes('┇geral'))
         .send(msgBoasVindasGeral)
         .catch(console.error)
 })
@@ -78,7 +79,7 @@ bot.on('message', msg => {
 
 function sendMessage({ channelName = 'podtag-bot', content }) {
     bot.channels
-        .find(({name} = channel) => name === channelName)
+        .find(({ name }) => name === channelName)
         .send(content)
         .catch(console.error)
 }
