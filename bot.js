@@ -14,14 +14,22 @@ const channels = {
 }
 
 const admins = {
-    everton: '308832343571824640'
+    everton: '308832343571824640',
+    luiz: '426163695677079562',
+}
+
+const guildId = '426162530109620224';
+
+const roles = {
+    convidados: '560999471257747456',
+    teste: '592885967711502394'
 }
 
 const ligacoesPraPulica = []
 
 bot.on('ready', () => {
     console.log(`Bot conectado!`)
-    sendMessage({ content: 'Olá mundo! Tô na Arya.' })
+    // sendMessage({ content: 'Olá mundo! Tô na Arya.' })
 })
 
 bot.on('guildMemberAdd', member => {
@@ -47,8 +55,9 @@ bot.on('guildMemberAdd', member => {
 })
 
 bot.on('guildMemberRemove', member => {
-    console.log(`Usuário ${member.user.username} [<@${member.user.id}>] deixou o servidor`)
-    const mensagemSaida = `${member.user.username} [<@${member.user.id}>] deixou o server 😕`
+    const { user } = member;
+    console.log(`Usuário ${user.username} [<@${user.id}>] deixou o servidor`)
+    const mensagemSaida = `${user.username} [<@${user.id}>] deixou o server 😕`
     member
         .guild
         .members
@@ -80,9 +89,14 @@ bot.on('message', msg => {
             }
             // !picpay
             case 'picpay': {
-                const replyPicPay = "que bom que você perguntou! Conheça os nossos planos de patronato no https://podtag.com.br/apoie e seja um patrão você também!"
-                msg.reply(replyPicPay)
+                msg.reply("que bom que você perguntou! Conheça os nossos planos de patronato no https://podtag.com.br/apoie e seja um patrão você também!")
                 break
+            }
+            // !role
+            case 'role': {
+                const authorId = author.id;
+                handleRole({ authorId, args })
+                break;
             }
         }
         return
@@ -110,6 +124,38 @@ bot.on('messageReactionAdd', reaction => {
         }, 5 * 1000)
     }
 })
+
+function handleRole({ authorId, args }) {
+    if (!Object.values(admins).includes(authorId)) return;
+    console.log(`@${authorId} executou !role ${args}`)
+
+    // !role clear <role>
+    if (args[0] === 'clear') {
+        const roleId = roles[args[1]]
+        if (!roleId) return;
+        roleClear({roleId});
+    }
+}
+
+function roleClear({ roleId }) {
+    const role = bot.guilds.get(guildId).roles.get(roleId)
+    if (!role) return;
+    if (role.id !== roles.convidados) {
+        console.error(`Comando '!role clear <id>' não liberado para a role [${role.name}]`)
+        return
+    }
+    
+    const { members } = role;
+    console.log(`Removendo a role ${role.name} de ${members.size} convidados`)
+    members.tap((member) => {
+        const { user } = member;
+        member.removeRole(roleId)
+            .then(() => {
+                console.log(`Role ${role.name} removida de ${user.username} (${user.id})`)
+            })
+            .catch(console.error);
+    })
+}
 
 function sendMessage({ channelName = 'podtag-bot', content }) {
     bot.channels
